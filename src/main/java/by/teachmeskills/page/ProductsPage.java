@@ -3,6 +3,7 @@ package by.teachmeskills.page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class ProductsPage extends BasePage {
     private By PRODUCTS_TITLE = By.xpath("//span[text()='Products']");
     private By CART = By.id("shopping_cart_container");
     private By ALL_PRODUCTS = By.xpath("//div[@class='inventory_item']");
+    private By ALL_PRODUCTS_NAMES = By.xpath("//div[@class='inventory_item_name']");
 
     private String PRODUCT_CARD_LOCATOR = "//div[text()='%s']/ancestor::div[@class='inventory_item']";
     private String PRODUCT_PRICE_LOCATOR = PRODUCT_CARD_LOCATOR + "//div[@class='inventory_item_price']";
@@ -20,12 +22,24 @@ public class ProductsPage extends BasePage {
         super(driver);
     }
 
+    public ProductsPage open() {
+        driver.get("https://www.saucedemo.com/inventory.html");
+        isOpened();
+        waitForPageLoaded();
+        return this;
+    }
+
     public boolean isOpened() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(PRODUCTS_TITLE));
         return driver.findElement(PRODUCTS_TITLE).isDisplayed();
     }
 
     public List<WebElement> getAllProducts() {
         return driver.findElements(ALL_PRODUCTS);
+    }
+
+    public List<WebElement> getAllProductNames() {
+        return driver.findElements(ALL_PRODUCTS_NAMES);
     }
 
     public ProductsPage addProductToCart(String productName) {

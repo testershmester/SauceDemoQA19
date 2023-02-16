@@ -12,6 +12,9 @@ public class LoginPage extends BasePage {
 
     public static final String PASSWORD_ERROR = "Epic sadface: Password is required";
 
+    public static final String DEFAULT_USER = "performance_glitch_user";
+    public static final String DEFAULT_PASSWORD = "secret_sauce";
+
     public LoginPage(WebDriver driver) {
         super(driver);
     }
@@ -19,6 +22,11 @@ public class LoginPage extends BasePage {
     public LoginPage open() {
         driver.get("https://www.saucedemo.com/");
         return new LoginPage(driver);
+    }
+
+    public ProductsPage loginAsDefaultUser() {
+        loginAs(DEFAULT_USER, DEFAULT_PASSWORD);
+        return new ProductsPage(driver);
     }
 
     public void loginAs(String userName, String password) {

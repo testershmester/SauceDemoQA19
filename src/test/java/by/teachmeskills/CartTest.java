@@ -12,7 +12,7 @@ public class CartTest extends BaseTest {
     public void checkProductPriceInTheCart() {
         final String productName = "Sauce Labs Backpack";
         ProductsPage productsPage = new LoginPage(driver).open()
-                                                         .loginAsStandardUser()
+                                                         .loginAsDefaultUser()
                                                          .addProductToCart(productName);
         String expectedPrice = productsPage.getProductPrice(productName);
         String actualPrice = productsPage.openCartPage()
