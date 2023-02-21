@@ -1,4 +1,4 @@
-package by.teachmeskills;
+package by.teachmeskills.multithreading;
 
 import com.github.javafaker.Faker;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -10,26 +10,27 @@ import org.testng.annotations.BeforeMethod;
 
 import java.time.Duration;
 
-public class BaseTest {
+public class MultiThreadBaseTest {
 
-    protected WebDriver driver;
+    static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
     protected Faker faker;
 
-    @BeforeMethod(alwaysRun = true)
+    @BeforeMethod
     public void setUp() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
-//        options.addArguments("--headless=new");
-        driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        options.addArguments("--headless=new");
+        WebDriver webDriver = new ChromeDriver(options);
+        driver.set(webDriver);
+        driver.get().manage().window().maximize();
+        driver.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         faker = new Faker();
     }
 
-    @AfterMethod(alwaysRun = true, groups = "cart")
+    @AfterMethod(alwaysRun = true)
     public void tearDown() {
         if (driver != null) {
-            driver.quit();
+            driver.get().quit();
         }
     }
 }

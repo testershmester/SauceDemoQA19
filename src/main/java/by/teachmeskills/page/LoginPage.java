@@ -5,23 +5,36 @@ import org.openqa.selenium.WebDriver;
 
 public class LoginPage extends BasePage {
 
-    private By USER_NAME = By.id("user-name");
-    private By PASSWORD = By.id("password");
-    private By LOGIN_BUTTON = By.id("login-button");
-    private By ERROR = By.xpath("//h3[@data-test='error']");
+    private static final By USER_NAME = By.id("user-name");
+    private static final By PASSWORD = By.id("password");
+    private static final By LOGIN_BUTTON = By.id("login-button");
+    private static final By ERROR = By.xpath("//h3[@data-test='error']");
 
     public static final String PASSWORD_ERROR = "Epic sadface: Password is required";
+    public static final String USER_NAME_ERROR = "Epic sadface: Username is required";
+    public static final String USER_LOCKED_OUT_ERROR = "Epic sadface: Sorry, this user has been locked out.";
 
-    public static final String DEFAULT_USER = "performance_glitch_user";
-    public static final String DEFAULT_PASSWORD = "secret_sauce";
+    public static final String STANDARD_USER = "standard_user";
+    public static final String LOCKED_OUT_USER = "locked_out_user";
+    public static final String PERFORMANCE_GLITCH_USER = "performance_glitch_user";
+    public static final String STANDARD_PASSWORD = "secret_sauce";
+
+    public static final String DEFAULT_USER = STANDARD_USER;
+    public static final String DEFAULT_PASSWORD = STANDARD_PASSWORD;
+
+    public static final String BASE_URL = "https://www.saucedemo.com/";
 
     public LoginPage(WebDriver driver) {
         super(driver);
     }
 
     public LoginPage open() {
-        driver.get("https://www.saucedemo.com/");
-        return new LoginPage(driver);
+        driver.get(BASE_URL);
+        return this;
+    }
+
+    public boolean isOpened() {
+        return driver.findElement(LOGIN_BUTTON).isDisplayed();
     }
 
     public ProductsPage loginAsDefaultUser() {
@@ -36,8 +49,20 @@ public class LoginPage extends BasePage {
     }
 
     public ProductsPage loginAsStandardUser() {
-        loginAs("standard_user", "secret_sauce");
+        loginAs(STANDARD_USER, STANDARD_PASSWORD);
         return new ProductsPage(driver);
+    }
+
+    public LoginPage loginAsLockedOutUser() {
+        loginAs(LOCKED_OUT_USER, STANDARD_PASSWORD);
+        return this;
+    }
+
+    public ProductsPage loginAsPerformanceGlitchUser() {
+        loginAs(PERFORMANCE_GLITCH_USER, STANDARD_PASSWORD);
+        ProductsPage productsPage = new ProductsPage(driver);
+        productsPage.isOpened();
+        return productsPage;
     }
 
     public String getErrorText() {
