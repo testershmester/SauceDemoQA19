@@ -2,9 +2,9 @@ package by.teachmeskills;
 
 import by.teachmeskills.page.LoginPage;
 import by.teachmeskills.page.ProductsPage;
+import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class CartTest extends BaseTest {
 
@@ -18,7 +18,7 @@ public class CartTest extends BaseTest {
         String actualPrice = productsPage.openCart()
                                          .getProductPrice(productName);
 
-        assertThat(actualPrice).as("Product should be added with correct price")
-                               .isEqualTo(expectedPrice);
+        Assertions.assertThat(actualPrice).as("Product should be added with correct price")
+                  .isEqualTo(expectedPrice);
     }
 }
