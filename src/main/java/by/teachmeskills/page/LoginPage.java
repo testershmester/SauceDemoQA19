@@ -1,7 +1,10 @@
 package by.teachmeskills.page;
 
+import by.teachmeskills.util.PropertiesLoader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+
+import java.util.Properties;
 
 public class LoginPage extends BasePage {
 
@@ -22,14 +25,13 @@ public class LoginPage extends BasePage {
     public static final String DEFAULT_USER = STANDARD_USER;
     public static final String DEFAULT_PASSWORD = STANDARD_PASSWORD;
 
-    public static final String BASE_URL = "https://www.saucedemo.com/";
-
     public LoginPage(WebDriver driver) {
         super(driver);
     }
 
     public LoginPage open() {
-        driver.get(BASE_URL);
+        Properties properties = PropertiesLoader.loadProperties();
+        driver.get(properties.getProperty("base.url"));
         return this;
     }
 

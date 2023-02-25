@@ -1,5 +1,6 @@
 package by.teachmeskills.page;
 
+import by.teachmeskills.util.PropertiesLoader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,7 +28,7 @@ public class ProductsPage extends BasePage {
     }
 
     public ProductsPage open() {
-        driver.get("https://www.saucedemo.com/inventory.html");
+        driver.get(PropertiesLoader.loadProperties().getProperty("base.url") + "/inventory.html");
         isOpened();
         waitForPageLoaded();
         return this;
