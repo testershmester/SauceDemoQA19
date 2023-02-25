@@ -4,6 +4,7 @@
     <listeners>
         <listener class-name="by.teachmeskills.util.testng.AnnotationTransformer"/>
         <listener class-name="by.teachmeskills.util.testng.TestListener"/>
+        <listener class-name="com.epam.reportportal.testng.ReportPortalTestNGListener" />
     </listeners>
     <test name="Tests for Chrome">
         <classes>
