@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -24,16 +25,25 @@ public class BaseTest {
     @Parameters("browser")
     @BeforeMethod(alwaysRun = true)
     public void setUp(@Optional("chrome") String browser, ITestContext testContext) {
+        String headless = System.getenv("headless");
+        boolean isHeadless = Boolean.parseBoolean(headless);
+
         if (StringUtils.equals(browser, "edge")) {
             WebDriverManager.edgedriver().setup();
             driver = new EdgeDriver();
         } else if (StringUtils.equals(browser, "firefox")) {
             WebDriverManager.firefoxdriver().setup();
+            FirefoxOptions options = new FirefoxOptions();
+            if (isHeadless) {
+                options.addArguments("-headless");
+            }
             driver = new FirefoxDriver();
         } else {
             WebDriverManager.chromedriver().setup();
             ChromeOptions options = new ChromeOptions();
-            options.addArguments("--headless=new");
+            if (isHeadless) {
+                options.addArguments("--headless=new");
+            }
             driver = new ChromeDriver(options);
         }
 
