@@ -20,6 +20,9 @@
         <apache.commons-collections4.version>4.4</apache.commons-collections4.version>
         <javafaker.version>1.0.2</javafaker.version>
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
+        <allure-maven.version>2.11.2</allure-maven.version>
+        <aspectj.version>1.9.9</aspectj.version>
+        <allure-testng.version>2.18.1</allure-testng.version>
 
         <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
     </properties>
@@ -67,6 +70,12 @@
             <artifactId>javafaker</artifactId>
             <version>1.0.2</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-testng -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>${allure-testng.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -76,10 +85,34 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
+                    <systemProperties>
+                        <property>
+                            <name>allure.results.directory</name>
+                            <value>${project.build.directory}/allure-results</value>
+                        </property>
+                    </systemProperties>
                     <suiteXmlFiles>
                         <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <failIfNoTests>true</failIfNoTests>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-maven -->
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>${allure-maven.version}</version>
             </plugin>
         </plugins>
     </build>
