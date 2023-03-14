@@ -30,7 +30,7 @@ public class BaseTest {
     @Parameters("browser")
     @BeforeMethod(alwaysRun = true)
     public void setUp(@Optional("chrome") String browser, ITestContext testContext) {
-        String headless = System.getenv("headless");
+        String headless = System.getenv("isHeadless");
         log.info("Do we run tests in headless mode (string)? " + headless);
         boolean isHeadless = Boolean.parseBoolean(headless);
         log.info("Do we run tests in headless mode? " + isHeadless);
