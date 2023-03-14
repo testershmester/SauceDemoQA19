@@ -8,13 +8,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class SuccessOrderFlowTest extends BaseTest {
 
-    public static final String SAUCE_LABS_ONESIE = "Sauce Labs Onesie";
+    public static final String PRODUCT = System.getenv("product") == null ? "Sauce Labs Onesie" :
+            System.getenv("product");
 
     @Test
     public void checkSuccessOneProductOrderFlow() {
         CheckoutCompletePage finalPage = new LoginPage(driver).open()
                                                               .loginAsStandardUser()
-                                                              .addProductToCart(SAUCE_LABS_ONESIE)
+                                                              .addProductToCart(PRODUCT)
                                                               .openCart()
                                                               .checkout()
                                                               .fillInCheckoutInfo(faker.name().firstName(), faker.name().lastName(), faker.address().zipCode())
