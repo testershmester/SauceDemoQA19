@@ -51,6 +51,7 @@ public class BaseTest {
             if (isHeadless) {
                 options.addArguments("--headless=new");
             }
+            options.addArguments("--remote-allow-origins=*");
             driver = new ChromeDriver(options);
         }
 
