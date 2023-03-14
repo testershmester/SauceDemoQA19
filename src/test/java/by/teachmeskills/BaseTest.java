@@ -3,12 +3,15 @@ package by.teachmeskills;
 import com.github.javafaker.Faker;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+
 import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -22,11 +25,14 @@ public class BaseTest {
     protected WebDriver driver;
     protected Faker faker;
 
+    Logger log = LogManager.getLogger(BaseTest.class);
+
     @Parameters("browser")
     @BeforeMethod(alwaysRun = true)
     public void setUp(@Optional("chrome") String browser, ITestContext testContext) {
         String headless = System.getenv("headless");
         boolean isHeadless = Boolean.parseBoolean(headless);
+        log.info("Do we run tests in headless mode? " + isHeadless);
 
         if (StringUtils.equals(browser, "edge")) {
             WebDriverManager.edgedriver().setup();
