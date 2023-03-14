@@ -1,6 +1,8 @@
 package by.teachmeskills.page;
 
 import by.teachmeskills.util.PropertiesLoader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,6 +23,8 @@ public class ProductsPage extends BasePage {
     private static final String PRODUCT_CARD_LOCATOR = "//div[text()='%s']/ancestor::div[@class='inventory_item']";
     private static final String PRODUCT_PRICE_LOCATOR = PRODUCT_CARD_LOCATOR + "//div[@class='inventory_item_price']";
     private static final String ADD_TO_CART_BUTTON_LOCATOR = PRODUCT_CARD_LOCATOR + "//button[text()='Add to cart']";
+
+    Logger log = LogManager.getLogger(ProductsPage.class);
 
 
     public ProductsPage(WebDriver driver) {
@@ -51,6 +55,7 @@ public class ProductsPage extends BasePage {
     }
 
     public ProductsPage addProductToCart(String productName) {
+        log.info("Add product {} to cart", productName);
         By fullLocator = By.xpath(String.format(ADD_TO_CART_BUTTON_LOCATOR, productName));
         driver.findElement(fullLocator).click();
         return this;
