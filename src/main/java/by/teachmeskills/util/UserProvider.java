@@ -10,7 +10,8 @@ public class UserProvider {
 
     public User getStandardUser() {
         Logger logger = LoggerFactory.getLogger(UserProvider.class);
-        String standardUserCreds = System.getProperty("STANDARD_USER_CREDS");
+        String standardUserCreds = System.getenv("STANDARD_USER_CREDS");
+        logger.info(standardUserCreds);
         String[] s = standardUserCreds.split("/");
         logger.info(Arrays.toString(s));
         return new User(s[0], s[1]);
