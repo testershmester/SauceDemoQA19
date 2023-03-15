@@ -12,6 +12,7 @@ public class UserProvider {
         Logger logger = LoggerFactory.getLogger(UserProvider.class);
         String standardUserCreds = System.getenv("STANDARD_USER_CREDS");
         logger.info(standardUserCreds);
+        logger.info(String.valueOf(standardUserCreds.contains("/")));
         String[] s = standardUserCreds.split("/");
         logger.info(Arrays.toString(s));
         return new User(s[0], s[1]);
