@@ -2,7 +2,6 @@ package by.teachmeskills;
 
 import by.teachmeskills.page.CheckoutCompletePage;
 import by.teachmeskills.page.LoginPage;
-import by.teachmeskills.util.UserProvider;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,7 +13,6 @@ public class SuccessOrderFlowTest extends BaseTest {
 
     @Test
     public void checkSuccessOneProductOrderFlow() {
-        new UserProvider().getStandardUser();
         CheckoutCompletePage finalPage = new LoginPage(driver).open()
                                                               .loginAsStandardUser()
                                                               .addProductToCart(PRODUCT)

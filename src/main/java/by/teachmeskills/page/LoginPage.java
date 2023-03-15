@@ -1,6 +1,10 @@
 package by.teachmeskills.page;
 
+import by.teachmeskills.dto.User;
 import by.teachmeskills.util.PropertiesLoader;
+import by.teachmeskills.util.UserProvider;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -51,7 +55,11 @@ public class LoginPage extends BasePage {
     }
 
     public ProductsPage loginAsStandardUser() {
-        loginAs(STANDARD_USER, STANDARD_PASSWORD);
+        User standardUser = new UserProvider().getStandardUser();
+        Logger log = LogManager.getLogger(LoginPage.class);
+        log.info(standardUser.getUserName());
+        log.info(standardUser.getPassword());
+        loginAs(standardUser.getUserName(), standardUser.getPassword());
         return new ProductsPage(driver);
     }
 
