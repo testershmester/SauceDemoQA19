@@ -1,6 +1,8 @@
 package by.teachmeskills.page;
 
 import by.teachmeskills.util.PropertiesLoader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -17,13 +19,10 @@ public class LoginPage extends BasePage {
     public static final String USER_NAME_ERROR = "Epic sadface: Username is required";
     public static final String USER_LOCKED_OUT_ERROR = "Epic sadface: Sorry, this user has been locked out.";
 
-    public static final String STANDARD_USER = "standard_user";
     public static final String LOCKED_OUT_USER = "locked_out_user";
     public static final String PERFORMANCE_GLITCH_USER = "performance_glitch_user";
-    public static final String STANDARD_PASSWORD = "secret_sauce";
 
-    public static final String DEFAULT_USER = STANDARD_USER;
-    public static final String DEFAULT_PASSWORD = STANDARD_PASSWORD;
+    private Logger log = LogManager.getLogger(LoginPage.class);
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -40,7 +39,10 @@ public class LoginPage extends BasePage {
     }
 
     public ProductsPage loginAsDefaultUser() {
-        loginAs(DEFAULT_USER, DEFAULT_PASSWORD);
+        String defaultUserName = getDefaultUserName();
+        String defaultPassword = getDefaultPassword();
+        log.info("Login with default user: {}, {}", defaultUserName, defaultPassword);
+        loginAs(defaultUserName, defaultPassword);
         return new ProductsPage(driver);
     }
 
@@ -51,17 +53,20 @@ public class LoginPage extends BasePage {
     }
 
     public ProductsPage loginAsStandardUser() {
-        loginAs(STANDARD_USER, STANDARD_PASSWORD);
+        String userName = System.getenv("USERNAME");
+        String password = System.getenv("PASSWORD");
+        log.info("Login as standard user: {}, {}", userName, password);
+        loginAs(userName, password);
         return new ProductsPage(driver);
     }
 
     public LoginPage loginAsLockedOutUser() {
-        loginAs(LOCKED_OUT_USER, STANDARD_PASSWORD);
+        loginAs(LOCKED_OUT_USER, System.getenv("PASSWORD"));
         return this;
     }
 
     public ProductsPage loginAsPerformanceGlitchUser() {
-        loginAs(PERFORMANCE_GLITCH_USER, STANDARD_PASSWORD);
+        loginAs(PERFORMANCE_GLITCH_USER, System.getenv("PASSWORD"));
         ProductsPage productsPage = new ProductsPage(driver);
         productsPage.isOpened();
         return productsPage;
@@ -69,5 +74,13 @@ public class LoginPage extends BasePage {
 
     public String getErrorText() {
         return driver.findElement(ERROR).getText();
+    }
+
+    private String getDefaultUserName() {
+        return System.getenv("USERNAME");
+    }
+
+    private String getDefaultPassword() {
+        return System.getenv("PASSWORD");
     }
 }
