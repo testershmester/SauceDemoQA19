@@ -76,11 +76,11 @@ public class LoginPage extends BasePage {
         return driver.findElement(ERROR).getText();
     }
 
-    private String getDefaultUserName() {
+    public static String getDefaultUserName() {
         return System.getenv("USERNAME");
     }
 
-    private String getDefaultPassword() {
+    public static String getDefaultPassword() {
         return System.getenv("PASSWORD");
     }
 }

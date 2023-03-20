@@ -33,7 +33,7 @@ public class LoginTest extends BaseTest {
     public void checkLoginWithoutPassword() {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.open()
-                 .loginAs(DEFAULT_USER, "");
+                 .loginAs(LoginPage.getDefaultUserName(), "");
         assertThat(loginPage.getErrorText()).isEqualTo(PASSWORD_ERROR)
                                             .as("The error \"" + PASSWORD_ERROR + "\" should be displayed if password has not been entered");
 
@@ -43,7 +43,7 @@ public class LoginTest extends BaseTest {
     public void checkLoginWithoutUserName() {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.open()
-                 .loginAs("", DEFAULT_PASSWORD);
+                 .loginAs("", LoginPage.getDefaultPassword());
         assertThat(loginPage.getErrorText()).isEqualTo(USER_NAME_ERROR)
                                             .as("The error \"" + USER_NAME_ERROR + "\" should be displayed if password has not been entered");
 
