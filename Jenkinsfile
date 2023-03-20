@@ -6,6 +6,8 @@ pipeline {
         maven "M3"
     }
 
+    properties([parameters([gitParameter(branch: '', branchFilter: '.*', defaultValue: 'origin/master', description: 'Select branch', name: 'BRANCH', type: 'GitParameterDefinition')])])
+
     stages {
         stage('Build') {
             steps {
