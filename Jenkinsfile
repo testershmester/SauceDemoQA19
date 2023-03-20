@@ -14,7 +14,8 @@ pipeline {
         stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-                git 'https://github.com/testershmester/SauceDemoQA19.git'
+                git branch: "${params.BRANCH}", url: 'https://github.com/testershmester/SauceDemoQA19.git'
+
 
                 // Run Maven on a Unix agent.
                 // sh "mvn -Dmaven.test.failure.ignore=true clean package"
