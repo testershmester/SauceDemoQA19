@@ -18,6 +18,7 @@ pipeline {
                     // Get some code from a GitHub repository
                     git branch: "${params.BRANCH}", url: 'https://github.com/testershmester/SauceDemoQA19.git'
 
+                    bat 'docker build -t my-maven-project .'
 
                     // Run Maven on a Unix agent.
                     // sh "mvn -Dmaven.test.failure.ignore=true clean package"
@@ -27,18 +28,18 @@ pipeline {
                 }
             }
         }
-        stage('Reports') {
-            steps {
-                script {
-                    allure([
-                        includeProperties: false,
-                        jdk: '',
-                        properties: [],
-                        reportBuildPolicy: 'ALWAYS',
-                        results: [[path: 'target/allure-results']]
-                    ])
-                }
-            }
-        }
+//         stage('Reports') {
+//             steps {
+//                 script {
+//                     allure([
+//                         includeProperties: false,
+//                         jdk: '',
+//                         properties: [],
+//                         reportBuildPolicy: 'ALWAYS',
+//                         results: [[path: 'target/allure-results']]
+//                     ])
+//                 }
+//             }
+//         }
     }
 }
