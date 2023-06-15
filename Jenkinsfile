@@ -8,7 +8,7 @@ pipeline {
 
     parameters {
         gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', description: 'Select branch', name: 'BRANCH', type: 'PT_BRANCH'
-        credentials credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl', defaultValue: '03ff2eb1-1d26-49cd-a6ed-3997381d0e62', name: 'STANDARD_USER_CREDS', required: true
+        credentials credentialType: 'SSH Username with private key.UsernamePasswordCredentialsImpl', defaultValue: '9d00c203-39a4-446b-846f-04edb56a7301', name: 'STANDARD_USER_CREDS', required: true
     }
 
     stages {
